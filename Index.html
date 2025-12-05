@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF kitoblarni  — iframe orqali ko‘rish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, Arial; margin:0; background:#f6f7fb; }
+    .layout { display:flex; min-height:100vh; }
+    .sidebar {
+      width:320px; background:#ffffff; border-right:1px solid #e5e7eb;
+      padding:20px; box-sizing:border-box;
+    }
+    .sidebar h2 { margin:0 0 12px; color:#0b67d0; font-size:18px; }
+    .sidebar .group { margin-bottom:18px; }
+    .sidebar label { display:block; font-size:13px; color:#555; margin-bottom:6px; }
+    .sidebar input[type="text"] {
+      width:100%; padding:8px; border:1px solid #d0d7de; border-radius:8px;
+    }
+    .sidebar button {
+      margin-top:8px; padding:8px 10px; border:1px solid #0b67d0; color:#0b67d0;
+      background:#f0f7ff; border-radius:8px; cursor:pointer;
+    }
+    .sidebar button:hover { background:#e6f1ff; }
+    .list { list-style:none; padding:0; margin:0; }
+    .list li { margin:6px 0; }
+    .list a {
+      display:block; padding:8px 10px; border:1px solid #e5e7eb; border-radius:8px;
+      text-decoration:none; color:#0b67d0; background:#fafafa;
+    }
+    .list a:hover { background:#f0f4f9; }
+    .content { flex:1; display:flex; flex-direction:column; }
+    .toolbar {
+      background:#ffffff; border-bottom:1px solid #e5e7eb; padding:10px 16px;
+      display:flex; gap:12px; align-items:center;
+    }
+    .toolbar b { font-weight:600; color:#333; }
+    .viewer {
+      flex:1; background:#111; display:flex; align-items:center; justify-content:center;
+    }
+    .viewer iframe {
+      width:100%; height:100%; border:0; background:#2b2b2b;
+    }
+    .hint {
+      font-size:13px; color:#666; margin-top:6px;
+    }
+    @media (max-width: 900px) {
+      .layout { flex-direction:column; }
+      .sidebar { width:100%; border-right:0; border-bottom:1px solid #e5e7eb; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- Sidebar: fayl tanlash -->
+       <aside class="sidebar">
+ <h2><li><img SRC="Rasm2.jpg" style="width:120px; height:auto;" > </a></li>
+</h2>
+    <div class="group">
+   <label></label>
+      <ul class="list" id="pdfList">
+        <!-- Misol: shu katalogda PDF fayllaringizni saqlang -->
+<li><a href="index2.html">Bosh sahifa</a></li>       
+ <li><a href="2_Kirish.pdf">Kirish</a></li>
+        <li><a href="3_1-amaliy mashg‘ulot.pdf">1-amaliy mashg‘ulot</a></li>
+        <li><a href="4_2-amaliy mashg‘ulot.pdf">2-amaliy mashg‘ulot</a></li>
+<li><a href="5_3-amaliy mashg‘ulot.pdf">3-amaliy mashg‘ulot</a></li>
+<li><a href="6_4-amaliy mashg‘ulot.pdf">3-amaliy mashg‘ulot</a></li>
+<li><a href="7_5-amaliy mashg‘ulot.pdf">4-amaliy mashg‘ulot</a></li>
+<li><a href="8_6-amaliy mashg‘ulot.pdf">5-amaliy mashg‘ulot</a></li>
+<li><a href="9_7-amaliy mashg‘ulot.pdf">6-amaliy mashg‘ulot</a></li>
+<li><a href="10_8-amaliy mashg‘ulot.pdf">7-amaliy mashg‘ulot</a></li>
+<li><a href="11_9-amaliy mashg‘ulot.pdf">8-amaliy mashg‘ulot</a></li>
+<li><a href="12_10-amaliy mashg‘ulot.pdf">9-amaliy mashg‘ulot</a></li>
+<li><a href="13_11-amaliy mashg‘ulot.pdf">10-amaliy mashg‘ulot</a></li>
+<li><a href="14_12-amaliy mashg‘ulot.pdf">11-amaliy mashg‘ulot</a></li>
+<li><a href="15_13-amaliy mashg‘ulot.pdf">12-amaliy mashg‘ulot</a></li>
+<li><a href="16_14-amaliy mashg‘ulot.pdf">13-amaliy mashg‘ulot</a></li>
+<li><a href="17_15-amaliy mashg‘ulot.pdf">14-amaliy mashg‘ulot</a></li>
+<li><a href="18_Ilova.pdf">Ilovalar.pdf</a></li>
+<li><a href="19_FOYDALANILGAN ADABIYOT.pdf">Foydalanilgan adabiyotlar</a></li>
+      </ul>
+         </div>
+
+    <div class="group">
+      <label for="fileInput"><b>Kitoblarni kompyuter xotirasidan chaqirib o'qish:</b></label>
+      <input type="file" id="fileInput" accept="application/pdf">
+      <!-- <p class="hint">Local PDF vaqtincha ko‘rish uchun ochiladi (object URL).</p>--> 
+    </div>
+
+    <div class="group">
+      <label for="urlInput"><b>Kitoblarni URL orqali ochib o'qish:</b></label>
+      <input type="text" id="urlInput" placeholder="https://.../fayl.pdf">
+      <button id="openUrlBtn">Ochish</button>
+      <p class="hint">Agar sayt CORS/embeddingni cheklamasa, to‘g‘ridan-to‘g‘ri ochiladi.</p>
+    </div>
+  </aside>
+
+  <!-- Kontent va viewer -->
+  <main class="content">
+    <div class="toolbar">
+      <b>Tanlangan sahifa:</b>
+      <span id="currentName" style="color:#0b67d0">Hech biri</span>
+    </div>
+    <div class="viewer">
+      <!-- PDF iframe -->
+      <iframe id="pdfFrame" src="" title="PDF viewer"></iframe>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  const pdfFrame = document.getElementById('pdfFrame');
+  const currentName = document.getElementById('currentName');
+  const fileInput = document.getElementById('fileInput');
+  const urlInput = document.getElementById('urlInput');
+  const openUrlBtn = document.getElementById('openUrlBtn');
+
+  // Ro‘yxatdagi havolalarni dinamik yuklash
+  document.getElementById('pdfList').addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    e.preventDefault();
+    const href = link.getAttribute('href');
+    pdfFrame.src = href;
+    currentName.textContent = href;
+  });
+
+  // Local faylni yuklash (object URL)
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    pdfFrame.src = url;
+    currentName.textContent = file.name;
+  });
+
+  // URL orqali ochish
+  openUrlBtn.addEventListener('click', () => {
+    const url = urlInput.value.trim();
+    if (!url) return;
+    pdfFrame.src = url;
+    currentName.textContent = url;
+  });
+
+  // Dastlabki holat (xohlasangiz bir PDF ni default oching)
+  // pdfFrame.src = 'kitob.pdf';
+  // currentName.textContent = 'kitob.pdf';
+</script>
+</body>
+</html>
